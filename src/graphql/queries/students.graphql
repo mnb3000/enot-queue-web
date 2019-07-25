@@ -1,0 +1,11 @@
+query Students {
+  students {
+    tgId
+    name
+    queuePlaces {
+      queueName
+      uniqueId
+      place
+    }
+  }
+}
