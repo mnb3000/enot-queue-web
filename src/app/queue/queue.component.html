@@ -1,0 +1,20 @@
+<mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+    <mat-cell *matCellDef="let studentToQueue"> {{studentToQueue.studentToQueueId}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+    <mat-cell *matCellDef="let studentToQueue"> {{statusEmoji[studentToQueue.status]}} </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell *matCellDef="let studentToQueue"> {{studentToQueue.student.name}} </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+<div class="button-container">
+  <button mat-raised-button color="primary" (click)="passStudent(true)">Пропустить</button>
+  <button mat-raised-button color="warn" (click)="passStudent(false)">Отклонить</button>
+</div>

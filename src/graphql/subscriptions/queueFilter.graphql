@@ -1,0 +1,13 @@
+#import "../fragments/studentToQueueData.graphql"
+
+subscription QueueFilter($queueId: String!) {
+  queueUpdateFilter( filterInput: { queueId: $queueId, upcomingLimit: 3, historyLimit: 5 }) {
+    queueId
+    upcomingStudentToQueues {
+      ...StudentToQueueData
+    }
+    historyStudentToQueues {
+      ...StudentToQueueData
+    }
+  }
+}

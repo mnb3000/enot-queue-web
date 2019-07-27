@@ -1,0 +1,10 @@
+#import "../fragments/queueData.graphql"
+#import "../fragments/studentData.graphql"
+query Queues {
+  queues {
+    ...QueueData
+    students {
+      ...StudentData
+    }
+  }
+}

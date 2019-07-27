@@ -1,0 +1,5 @@
+mutation PassStudent($queueName: String!, $isPassed: Boolean!) {
+  passQueueStudent(queueName: $queueName, isPassed: $isPassed) {
+    id
+  }
+}

@@ -1,0 +1,13 @@
+<mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell *matCellDef="let queue"> <a [routerLink]="['/queue', queue.id]"
+      routerLinkActive="router-link-active"> {{queue.name}} </a></mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="people">
+    <mat-header-cell *matHeaderCellDef> People </mat-header-cell>
+    <mat-cell *matCellDef="let queue"> {{queue.students.length}} </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

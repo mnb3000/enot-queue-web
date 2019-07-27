@@ -1,0 +1,11 @@
+.mat-column-id {
+  flex: 0 0 60px
+}
+
+.mat-column-status {
+  flex: 0 0 50px
+}
+
+.button-container {
+  text-align: center
+}

@@ -1,0 +1,5 @@
+fragment QueuePlacesData on QueuePlaceType {
+  queueName
+  place
+  uniqueId
+}

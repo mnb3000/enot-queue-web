@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { StudentsComponent } from './students/students.component';
+import { QueuesComponent } from './queues/queues.component';
+import { QueueComponent } from './queue/queue.component';
 
 const routes: Routes = [
-  { path: 'students', component: StudentsComponent },
-  { path: '', redirectTo: '/students', pathMatch: 'full' },
+  { path: 'queues', component: QueuesComponent },
+  { path: 'queue/:id', component: QueueComponent },
+  { path: '', redirectTo: '/queues', pathMatch: 'full' },
 ];
 
 @NgModule({
