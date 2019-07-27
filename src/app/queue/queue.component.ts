@@ -36,6 +36,7 @@ export class QueueComponent {
         this.dataSource = [
           ...queueUpdate.historyStudentToQueues.reverse(),
         ];
+        return;
       }
       this.queueName = currentStudent.queue.name;
       this.dataSource = [
@@ -47,7 +48,7 @@ export class QueueComponent {
     route.params.subscribe((params) => {
       this.queueUpdates = queueFilterGQL.subscribe({ queueId: params.id }).pipe(map(result => result.data.queueUpdateFilter));
       this.queueFilter = queueFilterQueryGQL.watch({ queueId: params.id }).valueChanges.pipe(map(result => result.data.queueFilter));
-      this.queueFilter.subscribe();
+      this.queueFilter.subscribe(queueUpdateHandler);
       this.queueUpdates.subscribe(queueUpdateHandler);
     });
   }

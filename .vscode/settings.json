@@ -1,3 +1,7 @@
 {
-    "workbench.colorCustomizations": null
+    "workbench.colorCustomizations": null,
+    "prettier.semi": true,
+    "prettier.tabWidth": 2,
+    "prettier.useTabs": false,
+    "prettier.singleQuote": true,
 }
