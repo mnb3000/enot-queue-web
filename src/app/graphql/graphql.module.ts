@@ -34,6 +34,16 @@ export function createApollo(httpLink: HttpLink) {
   return {
     link,
     cache: new InMemoryCache(),
+    defaultOptions: {
+      watchQuery: {
+        fetchPolicy: 'no-cache',
+        errorPolicy: 'ignore',
+      },
+      query: {
+        fetchPolicy: 'no-cache',
+        errorPolicy: 'all',
+      },
+    }
   };
 }
 
