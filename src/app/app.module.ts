@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql/graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { StudentsComponent } from './students/students.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MaterialModule } from './material/material.module';
@@ -15,7 +14,6 @@ import { QueueComponent } from './queue/queue.component';
 @NgModule({
   declarations: [
     AppComponent,
-    StudentsComponent,
     NavbarComponent,
     QueuesComponent,
     QueueComponent
