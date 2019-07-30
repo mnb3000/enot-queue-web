@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { CoreModule } from './core.module';
 
-@Injectable({
-  providedIn: CoreModule
-})
+@Injectable()
 export class NavbarTextService {
   // Observable string sources
   private emitChangeSource = new Subject<string>();
