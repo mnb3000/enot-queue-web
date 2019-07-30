@@ -1,7 +1,7 @@
 <mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-    <mat-cell *matCellDef="let queue"> <a [routerLink]="['/queue', queue.id]"
+    <mat-cell *matCellDef="let queue"> <a [routerLink]="[path, queue.id]"
       routerLinkActive="router-link-active"> {{queue.name}} </a></mat-cell>
   </ng-container>
   <ng-container matColumnDef="people">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   QueueFilterGQL, QueueFilterSubscription, QueueFilterQueryQuery, QueueFilterQueryGQL, Status, PassStudentGQL
 } from 'src/generated/graphql';
@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './queue.component.html',
   styleUrls: ['./queue.component.css']
 })
-export class QueueComponent {
+export class QueueAdminComponent {
   queueUpdates: Observable<QueueFilterSubscription['queueUpdateFilter']>;
   queueFilter: Observable<QueueFilterQueryQuery['queueFilter']>;
   displayedColumns = ['id', 'status', 'name'];

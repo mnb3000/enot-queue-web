@@ -1,30 +1,27 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { GraphQLModule } from './graphql/graphql.module';
-import { HttpClientModule } from '@angular/common/http';
+import { MonitorModule } from './monitor/monitor.module';
+import { AdminModule } from './admin/admin.module';
+import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NavbarComponent } from './navbar/navbar.component';
-import { MaterialModule } from './material/material.module';
-import { QueuesComponent } from './queues/queues.component';
-import { QueueComponent } from './queue/queue.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    QueuesComponent,
-    QueueComponent
   ],
   imports: [
     BrowserModule,
-    GraphQLModule,
-    HttpClientModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
-    MaterialModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    SharedModule,
+    AppRoutingModule,
+    MonitorModule,
+    AdminModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

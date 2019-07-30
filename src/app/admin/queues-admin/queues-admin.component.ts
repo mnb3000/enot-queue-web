@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
-import { QueuesGQL, QueuesQuery } from '../../generated/graphql';
-import { Observable } from 'rxjs';
+import { QueuesGQL, QueuesQuery } from '../../../generated/graphql';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-queues',
-  templateUrl: './queues.component.html',
-  styleUrls: ['./queues.component.css']
+  selector: 'app-queues-admin',
+  templateUrl: './queues-admin.component.html',
+  styleUrls: ['./queues-admin.component.css']
 })
-export class QueuesComponent {
+export class QueuesAdminComponent {
   queues: Observable<QueuesQuery['queues']>;
-  displayedColumns = ['name', 'people'];
   dataSource: QueuesQuery['queues'] = [];
+
   constructor(private queuesGQL: QueuesGQL) {
     this.queues = queuesGQL.watch().valueChanges.pipe(map(result => result.data.queues));
     this.queues.subscribe((queues) => { this.dataSource = queues; });

@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { QueuesComponent } from './queues/queues.component';
-import { QueueComponent } from './queue/queue.component';
+import { AdminComponent } from './admin/admin/admin.component';
 
 const routes: Routes = [
-  { path: 'queues', component: QueuesComponent },
-  { path: 'queue/:id', component: QueueComponent },
-  { path: '', redirectTo: '/queues', pathMatch: 'full' },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    loadChildren: () => import('./admin/admin.module').then(mod => mod.AdminModule)
+  },
+  { path: '**', redirectTo: '/admin/queues', pathMatch: 'full' },
 ];
 
 @NgModule({
