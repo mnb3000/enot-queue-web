@@ -129,6 +129,23 @@ export type StudentInput = {
   tgId: Scalars["Int"];
 };
 
+export type StudentPassedPayload = {
+  __typename?: "StudentPassedPayload";
+  queueName: Scalars["String"];
+  place: Scalars["Int"];
+  uniqueId: Scalars["Int"];
+  student: Student;
+  passed: Scalars["Boolean"];
+};
+
+export type StudentPlaceUpdatePayload = {
+  __typename?: "StudentPlaceUpdatePayload";
+  queueName: Scalars["String"];
+  place: Scalars["Int"];
+  uniqueId: Scalars["Int"];
+  student: Student;
+};
+
 export type StudentToQueue = {
   __typename?: "StudentToQueue";
   studentToQueueId: Scalars["Int"];
@@ -141,19 +158,12 @@ export type StudentToQueue = {
   queue: Queue;
 };
 
-export type StudentUpdatePayload = {
-  __typename?: "StudentUpdatePayload";
-  queueName: Scalars["String"];
-  place: Scalars["Int"];
-  uniqueId: Scalars["Int"];
-  student: Student;
-};
-
 export type Subscription = {
   __typename?: "Subscription";
   queueUpdate: Queue;
   queueUpdateFilter: QueueUpdateFilterPayload;
-  notifyStudentPlace: StudentUpdatePayload;
+  notifyStudentPlace: StudentPlaceUpdatePayload;
+  notifyStudentPassed: StudentPassedPayload;
 };
 
 export type SubscriptionQueueUpdateArgs = {
