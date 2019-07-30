@@ -1,0 +1,23 @@
+:host {
+  height: calc(100vh - 64px);
+  width: 100%;
+  position: fixed;
+}
+
+mat-card {
+  padding: 25px;
+}
+
+@media screen and (max-width: 599px) {
+  mat-card {
+    padding: 16px;
+  }
+  :host {
+    height: calc(100vh - 54px);
+  }
+}
+
+.next {
+  font-size: 20vh;
+  margin-top: 10px;
+}

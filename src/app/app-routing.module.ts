@@ -14,7 +14,7 @@ const routes: Routes = [
     component: MonitorComponent,
     loadChildren: () => import('./monitor/monitor.module').then(mod => mod.MonitorModule)
   },
-  { path: '**', redirectTo: '/admin/queues', pathMatch: 'full' },
+  { path: '**', redirectTo: '/monitor/queues', pathMatch: 'full' },
 ];
 
 @NgModule({

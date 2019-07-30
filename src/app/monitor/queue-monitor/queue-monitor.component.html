@@ -1,0 +1,23 @@
+<div fxLayout="row wrap" fxLayout.lt-sm="column"
+     fxLayoutAlign="flex-start" style="height: 100%; width: 100%;">
+  <div fxFlex="0 1 calc(50%)"
+  fxFlex.lt-sm="100%" fxLayout="column" fxFlexFill fxLayoutAlign="center center">
+    <div *ngIf="currentNumber; then nextNum else noNextNum"></div>
+  </div>
+  <div fxFlex="0 1 calc(50%)"
+  fxFlex.lt-sm="100%" fxLayout="column" fxFlexFill fxLayoutAlign="center center">
+    <h1>Очередь:</h1>
+    <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="15px">
+      <mat-card *ngFor="let queueId of queueIds"><h1>{{queueId}}</h1></mat-card>
+    </div>
+  </div>
+</div>
+
+<ng-template #nextNum>
+  <h1>Следующий номер:</h1>
+  <h1 class="next">{{currentNumber}}</h1>
+</ng-template>
+
+<ng-template #noNextNum>
+  <h1 class="next">###</h1>
+</ng-template>
