@@ -1,0 +1,8 @@
+subscription QueueUpdate($queueId: String!) {
+  queueUpdate(id: $queueId) {
+    ...QueueData
+    studentToQueuesInQueue {
+      ...StudentToQueueBaseData
+    }
+  }
+}

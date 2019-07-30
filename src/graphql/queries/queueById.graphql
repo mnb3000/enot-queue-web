@@ -1,0 +1,8 @@
+query Queue($queueId: String!) {
+  queueById(id: $queueId) {
+    ...QueueData
+    studentToQueuesInQueue {
+      ...StudentToQueueBaseData
+    }
+  }
+}

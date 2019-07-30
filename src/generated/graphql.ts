@@ -54,6 +54,7 @@ export type MutationLeaveQueueArgs = {
 export type Query = {
   __typename?: "Query";
   queue?: Maybe<Queue>;
+  queueById?: Maybe<Queue>;
   queues: Array<Queue>;
   queueFilter: QueueUpdateFilterPayload;
   student?: Maybe<Student>;
@@ -62,6 +63,10 @@ export type Query = {
 
 export type QueryQueueArgs = {
   name: Scalars["String"];
+};
+
+export type QueryQueueByIdArgs = {
+  id: Scalars["String"];
 };
 
 export type QueryQueueFilterArgs = {
@@ -167,7 +172,7 @@ export type Subscription = {
 };
 
 export type SubscriptionQueueUpdateArgs = {
-  queueName: Scalars["String"];
+  id: Scalars["String"];
 };
 
 export type SubscriptionQueueUpdateFilterArgs = {
@@ -192,12 +197,15 @@ export type StudentDataFragment = { __typename?: "Student" } & Pick<
   "id" | "tgId" | "name"
 >;
 
-export type StudentToQueueDataFragment = {
+export type StudentToQueueBaseDataFragment = {
   __typename?: "StudentToQueue";
 } & Pick<StudentToQueue, "studentToQueueId" | "status"> & {
     student: { __typename?: "Student" } & StudentDataFragment;
-    queue: { __typename?: "Queue" } & QueueDataFragment;
   };
+
+export type StudentToQueueDataFragment = { __typename?: "StudentToQueue" } & {
+  queue: { __typename?: "Queue" } & QueueDataFragment;
+} & StudentToQueueBaseDataFragment;
 
 export type PassStudentMutationVariables = {
   queueName: Scalars["String"];
@@ -206,6 +214,20 @@ export type PassStudentMutationVariables = {
 
 export type PassStudentMutation = { __typename?: "Mutation" } & {
   passQueueStudent: { __typename?: "Queue" } & Pick<Queue, "id">;
+};
+
+export type QueueQueryVariables = {
+  queueId: Scalars["String"];
+};
+
+export type QueueQuery = { __typename?: "Query" } & {
+  queueById: Maybe<
+    { __typename?: "Queue" } & {
+      studentToQueuesInQueue: Array<
+        { __typename?: "StudentToQueue" } & StudentToQueueBaseDataFragment
+      >;
+    } & QueueDataFragment
+  >;
 };
 
 export type QueueFilterQueryQueryVariables = {
@@ -265,6 +287,18 @@ export type QueueFilterSubscription = { __typename?: "Subscription" } & {
       >;
     };
 };
+
+export type QueueUpdateSubscriptionVariables = {
+  queueId: Scalars["String"];
+};
+
+export type QueueUpdateSubscription = { __typename?: "Subscription" } & {
+  queueUpdate: { __typename?: "Queue" } & {
+    studentToQueuesInQueue: Array<
+      { __typename?: "StudentToQueue" } & StudentToQueueBaseDataFragment
+    >;
+  } & QueueDataFragment;
+};
 export const QueuePlacesDataFragmentDoc = gql`
   fragment QueuePlacesData on QueuePlaceType {
     queueName
@@ -279,6 +313,16 @@ export const StudentDataFragmentDoc = gql`
     name
   }
 `;
+export const StudentToQueueBaseDataFragmentDoc = gql`
+  fragment StudentToQueueBaseData on StudentToQueue {
+    studentToQueueId
+    status
+    student {
+      ...StudentData
+    }
+  }
+  ${StudentDataFragmentDoc}
+`;
 export const QueueDataFragmentDoc = gql`
   fragment QueueData on Queue {
     id
@@ -287,16 +331,12 @@ export const QueueDataFragmentDoc = gql`
 `;
 export const StudentToQueueDataFragmentDoc = gql`
   fragment StudentToQueueData on StudentToQueue {
-    studentToQueueId
-    status
-    student {
-      ...StudentData
-    }
+    ...StudentToQueueBaseData
     queue {
       ...QueueData
     }
   }
-  ${StudentDataFragmentDoc}
+  ${StudentToQueueBaseDataFragmentDoc}
   ${QueueDataFragmentDoc}
 `;
 export const PassStudentDocument = gql`
@@ -315,6 +355,25 @@ export class PassStudentGQL extends Apollo.Mutation<
   PassStudentMutationVariables
 > {
   document = PassStudentDocument;
+}
+export const QueueDocument = gql`
+  query Queue($queueId: String!) {
+    queueById(id: $queueId) {
+      ...QueueData
+      studentToQueuesInQueue {
+        ...StudentToQueueBaseData
+      }
+    }
+  }
+  ${QueueDataFragmentDoc}
+  ${StudentToQueueBaseDataFragmentDoc}
+`;
+
+@Injectable({
+  providedIn: "root"
+})
+export class QueueGQL extends Apollo.Query<QueueQuery, QueueQueryVariables> {
+  document = QueueDocument;
 }
 export const QueueFilterQueryDocument = gql`
   query QueueFilterQuery($queueId: String!) {
@@ -408,4 +467,26 @@ export class QueueFilterGQL extends Apollo.Subscription<
   QueueFilterSubscriptionVariables
 > {
   document = QueueFilterDocument;
+}
+export const QueueUpdateDocument = gql`
+  subscription QueueUpdate($queueId: String!) {
+    queueUpdate(id: $queueId) {
+      ...QueueData
+      studentToQueuesInQueue {
+        ...StudentToQueueBaseData
+      }
+    }
+  }
+  ${QueueDataFragmentDoc}
+  ${StudentToQueueBaseDataFragmentDoc}
+`;
+
+@Injectable({
+  providedIn: "root"
+})
+export class QueueUpdateGQL extends Apollo.Subscription<
+  QueueUpdateSubscription,
+  QueueUpdateSubscriptionVariables
+> {
+  document = QueueUpdateDocument;
 }

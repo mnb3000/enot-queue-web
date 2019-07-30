@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { QueuesQuery } from '../../../generated/graphql';
+import { QueuesGQL, QueuesQuery } from '../../../generated/graphql';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-queues',
@@ -8,9 +10,13 @@ import { QueuesQuery } from '../../../generated/graphql';
 })
 export class QueuesComponent {
   displayedColumns = ['name', 'people'];
+  queues: Observable<QueuesQuery['queues']>;
+  dataSource: QueuesQuery['queues'] = [];
 
   @Input()
   path: string;
-  @Input()
-  dataSource: QueuesQuery['queues'] = [];
+  constructor(private queuesGQL: QueuesGQL) {
+    this.queues = queuesGQL.watch().valueChanges.pipe(map(result => result.data.queues));
+    this.queues.subscribe((queues) => { this.dataSource = queues; });
+  }
 }

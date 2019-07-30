@@ -5,6 +5,7 @@ import { MaterialModule } from './material/material.module';
 import { GraphQLModule } from './graphql/graphql.module';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -15,14 +16,16 @@ import { NavbarComponent } from './navbar/navbar.component';
     CommonModule,
     MaterialModule,
     GraphQLModule,
-    RouterModule
+    RouterModule,
+    FlexLayoutModule,
   ],
   exports: [
     CommonModule,
     QueuesComponent,
     NavbarComponent,
     MaterialModule,
-    GraphQLModule
+    GraphQLModule,
+    FlexLayoutModule,
   ]
 })
 export class SharedModule { }

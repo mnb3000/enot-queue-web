@@ -1,11 +1,5 @@
-#import "../fragments/studentData.graphql"
-#import "../fragments/queueData.graphql"
 fragment StudentToQueueData on StudentToQueue {
-  studentToQueueId
-  status
-  student {
-    ...StudentData
-  }
+  ...StudentToQueueBaseData
   queue {
     ...QueueData
   }

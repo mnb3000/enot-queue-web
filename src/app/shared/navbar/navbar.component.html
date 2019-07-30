@@ -1,3 +1,7 @@
 <mat-toolbar color="primary">
-  <mat-toolbar-row [routerLink]="rootLink">ENOT</mat-toolbar-row>
+  <mat-toolbar-row>
+    <span [routerLink]="rootLink">ENOT</span>
+    <span class="nav-spacer"></span>
+    <span>{{text}}</span>
+  </mat-toolbar-row>
 </mat-toolbar>

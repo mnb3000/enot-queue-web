@@ -1,5 +1,3 @@
-#import "../fragments/studentData.graphql"
-#import "../fragments/queuePlacesData.graphql"
 query Students {
   students {
     ...StudentData
