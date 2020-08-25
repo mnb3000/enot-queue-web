@@ -1,4 +1,4 @@
 <div fxLayout="row" fxLayoutAlign="space-around">
 <!--  <app-queue-monitor queueId="2b58721a-5b6b-4a89-ad8c-5b605ff31dcc"></app-queue-monitor>-->
-  <app-queue-monitor *ngFor="let queue of queues$ | async" [queueId]="queue.id"></app-queue-monitor>
+  <app-queue-monitor *ngFor="let queue of queues$ | async" [queueId]="queue.id" fxFlex="1 1 0px"></app-queue-monitor>
 </div>

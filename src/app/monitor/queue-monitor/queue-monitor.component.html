@@ -1,7 +1,7 @@
 <div fxLayout="column"
      fxLayoutAlign="flex-start" style="height: calc(100vh - 64px); max-width: 100%">
   <div fxFlex="0 1 calc(10%)" fxLayout="column" fxFlexFill fxLayoutAlign="center center">
-    <h1 class="queue-name">{{(queue$ | async).name}}</h1>
+    <h1 class="queue-name">{{(queue$ | async).name.toUpperCase().substr(0, 3)}}</h1>
   </div>
   <div fxFlex="0 1 calc(50%)" fxLayout="column" fxFlexFill fxLayoutAlign="center center">
     <div *ngIf="currentNumber; then nextNum else noNextNum"></div>
