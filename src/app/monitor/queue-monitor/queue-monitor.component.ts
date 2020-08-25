@@ -1,42 +1,29 @@
-import { Component } from '@angular/core';
-import { QueueGQL, QueueQuery, QueueUpdateGQL, QueueUpdateSubscription } from '../../../generated/graphql';
-import { ActivatedRoute } from '@angular/router';
-import { NavbarTextService } from '../../core/navbar-text.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { QueueService } from '../queue.service';
 
 @Component({
   selector: 'app-queue-monitor',
   templateUrl: './queue-monitor.component.html',
   styleUrls: ['./queue-monitor.component.css']
 })
-export class QueueMonitorComponent {
+export class QueueMonitorComponent implements OnInit {
   currentNumber: number;
-  queueIds: number[];
-  queue: Observable<QueueQuery['queueById']>;
-  queueUpdate: Observable<QueueUpdateSubscription['queueUpdate']>;
+  queueCodes: number[];
+  positions$: Observable<Position[]>;
+  queue$: Observable<Queue>;
+  @Input() queueId: number;
 
   constructor(
-    private queueGQL: QueueGQL,
-    private queueUpdateGQL: QueueUpdateGQL,
-    private route: ActivatedRoute,
-    private textService: NavbarTextService,
-  ) {
-    const queueUpdateHandler = (queueUpdate: QueueQuery['queueById']) => {
-      textService.emitChange(queueUpdate.name);
-      this.currentNumber = queueUpdate.studentToQueuesInQueue[0]
-        ? queueUpdate.studentToQueuesInQueue[0].studentToQueueId
-        : 0;
-      this.queueIds = queueUpdate.studentToQueuesInQueue
-        .slice(1, 6)
-        .map(studentToQueue => studentToQueue.studentToQueueId);
-      console.log(this.queueIds);
-    };
-    route.params.subscribe((params) => {
-      this.queue = queueGQL.watch({ queueId: params.id }).valueChanges.pipe(map(result => result.data.queueById));
-      this.queueUpdate = queueUpdateGQL.subscribe({ queueId: params.id }).pipe(map(result => result.data.queueUpdate));
-      this.queue.subscribe(queueUpdateHandler);
-      this.queueUpdate.subscribe(queueUpdateHandler);
+    private readonly queueService: QueueService
+  ) {}
+
+  ngOnInit() {
+    this.positions$ = this.queueService.getQueueUsers(this.queueId, 6);
+    this.queue$ = this.queueService.getQueue(this.queueId);
+    this.positions$.subscribe((positions) => {
+      this.currentNumber = positions[0] ? positions[0].code : 0;
+      this.queueCodes = positions.slice(1, Infinity).map((position) => position.code);
     });
   }
 }

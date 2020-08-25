@@ -1,14 +1,15 @@
-<div fxLayout="row wrap" fxLayout.lt-sm="column"
-     fxLayoutAlign="flex-start" style="height: 100%; width: 100%;">
-  <div fxFlex="0 1 calc(50%)"
-  fxFlex.lt-sm="100%" fxLayout="column" fxFlexFill fxLayoutAlign="center center">
+<div fxLayout="column"
+     fxLayoutAlign="flex-start" style="height: calc(100vh - 64px); max-width: 100%">
+  <div fxFlex="0 1 calc(10%)" fxLayout="column" fxFlexFill fxLayoutAlign="center center">
+    <h1 class="queue-name">{{(queue$ | async).name}}</h1>
+  </div>
+  <div fxFlex="0 1 calc(50%)" fxLayout="column" fxFlexFill fxLayoutAlign="center center">
     <div *ngIf="currentNumber; then nextNum else noNextNum"></div>
   </div>
-  <div fxFlex="0 1 calc(50%)"
-  fxFlex.lt-sm="100%" fxLayout="column" fxFlexFill fxLayoutAlign="center center">
+  <div fxFlex="0 1 calc(50%)" fxLayout="column" fxFlexFill fxLayoutAlign="start center">
     <h1>Очередь:</h1>
-    <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="15px">
-      <mat-card *ngFor="let queueId of queueIds"><h1>{{queueId}}</h1></mat-card>
+    <div fxLayout="row wrap" fxLayoutAlign="center center">
+      <mat-card *ngFor="let queueCode of queueCodes"><h1>{{queueCode}}</h1></mat-card>
     </div>
   </div>
 </div>
