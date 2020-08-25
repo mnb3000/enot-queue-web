@@ -1,24 +1,24 @@
 <div fxLayout="column"
      fxLayoutAlign="flex-start" style="height: calc(100vh - 64px); max-width: 100%">
   <div fxFlex="0 1 calc(10%)" fxLayout="column" fxFlexFill fxLayoutAlign="center center">
-    <h1 class="queue-name">{{(queue$ | async).name.toUpperCase().substr(0, 3)}}</h1>
+    <h1 class="queue-name">{{(queue$ | async)?.name.toUpperCase().substr(0, 3)}}</h1>
   </div>
   <div fxFlex="0 1 calc(50%)" fxLayout="column" fxFlexFill fxLayoutAlign="center center">
-    <div *ngIf="currentNumber; then nextNum else noNextNum"></div>
+    <div *ngIf="processing$ | async; then nextNum else noNextNum"></div>
   </div>
   <div fxFlex="0 1 calc(50%)" fxLayout="column" fxFlexFill fxLayoutAlign="start center">
     <h1>Очередь:</h1>
     <div fxLayout="row wrap" fxLayoutAlign="center center">
-      <mat-card *ngFor="let queueCode of queueCodes"><h1>{{queueCode}}</h1></mat-card>
+      <mat-card *ngFor="let queueCode of waiting$ | async"><h1>{{queueCode}}</h1></mat-card>
     </div>
   </div>
 </div>
 
 <ng-template #nextNum>
-  <h1>Следующий номер:</h1>
-  <h1 class="next">{{currentNumber}}</h1>
+  <h1>Следующие номера:</h1>
+  <h1 class="next">{{(processing$ | async)}}</h1>
 </ng-template>
 
 <ng-template #noNextNum>
-  <h1 class="next">###</h1>
+  <h1 class="next">-</h1>
 </ng-template>

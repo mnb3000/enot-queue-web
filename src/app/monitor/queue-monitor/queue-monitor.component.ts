@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { QueueService } from '../queue.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-queue-monitor',
@@ -10,7 +11,8 @@ import { QueueService } from '../queue.service';
 export class QueueMonitorComponent implements OnInit {
   currentNumber: number;
   queueCodes: number[];
-  positions$: Observable<Position[]>;
+  processing$: Observable<string>;
+  waiting$: Observable<number[]>;
   queue$: Observable<Queue>;
   @Input() queueId: number;
 
@@ -19,11 +21,13 @@ export class QueueMonitorComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.positions$ = this.queueService.getQueueUsers(this.queueId, 6);
+    const [waiting, processing] = this.queueService.getQueueUsers(this.queueId, 7);
+    this.waiting$ = waiting.pipe(
+      map((positions) => positions.map(position => position.code)),
+    );
+    this.processing$ = processing.pipe(
+      map((positions) => positions.reduce<string>((out, position) => out += `${position.code.toString()} `, ''))
+    );
     this.queue$ = this.queueService.getQueue(this.queueId);
-    this.positions$.subscribe((positions) => {
-      this.currentNumber = positions[0] ? positions[0].code : 0;
-      this.queueCodes = positions.slice(1, Infinity).map((position) => position.code);
-    });
   }
 }

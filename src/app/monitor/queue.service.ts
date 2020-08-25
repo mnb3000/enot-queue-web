@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Subject, timer } from 'rxjs';
-import { map, retry, switchMap, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, timer } from 'rxjs';
+import { map, retry, share, switchMap, takeUntil } from 'rxjs/operators';
 
 @Injectable()
 export class QueueService implements OnDestroy {
@@ -14,8 +14,8 @@ export class QueueService implements OnDestroy {
 
   constructor(private http: HttpClient) {}
 
-  getQueueUsers(id: number, limit: number) {
-    return timer(1, 2000).pipe(
+  getQueueUsers(id: number, limit: number): [Observable<Position[]>, Observable<Position[]>] {
+    const positions$ = timer(1, 2000).pipe(
       switchMap(
         () => this.http.get<PositionsResponse>(
           `http://134.122.90.94:4444/queues/${id}/users`,
@@ -23,9 +23,14 @@ export class QueueService implements OnDestroy {
         )
       ),
       retry(),
+      share(),
       takeUntil(this.stopPolling),
       map((res) => res.positions)
     );
+    return [
+      positions$.pipe(map(positions => positions.filter(position => position.status === 'waiting'))),
+      positions$.pipe(map(positions => positions.filter(position => position.status === 'processing'))),
+    ];
   }
 
   getQueues() {
