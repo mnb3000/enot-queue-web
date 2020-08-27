@@ -18,7 +18,7 @@ export class QueueService implements OnDestroy {
     const positions$ = timer(1, 2000).pipe(
       switchMap(
         () => this.http.get<PositionsResponse>(
-          `http://134.122.90.94:4444/queues/${id}/users`,
+          `https://api.admission.hatomist.pw/queues/${id}/users`,
           { ...this.httpOptions, params: { take: limit.toString() } }
         )
       ),
@@ -34,13 +34,13 @@ export class QueueService implements OnDestroy {
   }
 
   getQueues() {
-    return this.http.get<QueuesResponse>(`http://134.122.90.94:4444/queues/`, this.httpOptions).pipe(
+    return this.http.get<QueuesResponse>(`https://api.admission.hatomist.pw/queues/`, this.httpOptions).pipe(
       map((res) => res.queues.filter((queue => queue.active)))
     );
   }
 
   getQueue(id: number) {
-    return this.http.get<QueueResponse>(`http://134.122.90.94:4444/queues/${id}`, this.httpOptions).pipe(
+    return this.http.get<QueueResponse>(`https://api.admission.hatomist.pw/queues/${id}`, this.httpOptions).pipe(
       map((res) => res.queue),
     );
   }

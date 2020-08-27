@@ -7,7 +7,7 @@
     <div *ngIf="processing$ | async; then nextNum else noNextNum"></div>
   </div>
   <div fxFlex="0 1 calc(50%)" fxLayout="column" fxFlexFill fxLayoutAlign="start center">
-    <h1>Очередь:</h1>
+    <h1>Черга:</h1>
     <div fxLayout="row wrap" fxLayoutAlign="center center">
       <mat-card *ngFor="let queueCode of waiting$ | async"><h1>{{queueCode}}</h1></mat-card>
     </div>
@@ -15,7 +15,7 @@
 </div>
 
 <ng-template #nextNum>
-  <h1>Следующие номера:</h1>
+  <h1>Наступні номери:</h1>
   <h1 class="next">{{(processing$ | async)}}</h1>
 </ng-template>
 
