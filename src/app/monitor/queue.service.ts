@@ -29,7 +29,7 @@ export class QueueService implements OnDestroy {
     );
     return [
       positions$.pipe(map(positions => positions.filter(position => position.status === 'waiting'))),
-      positions$.pipe(map(positions => positions.filter(position => position.status === 'processing'))),
+      positions$.pipe(map(positions => positions.filter(position => position.status === 'going'))),
     ];
   }
 

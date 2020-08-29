@@ -4,7 +4,7 @@
     <h1 class="queue-name">{{(queue$ | async)?.name.toUpperCase().substr(0, 3)}}</h1>
   </div>
   <div fxFlex="0 1 calc(50%)" fxLayout="column" fxFlexFill fxLayoutAlign="center center">
-    <div *ngIf="processing$ | async; then nextNum else noNextNum"></div>
+    <div *ngIf="going$ | async; then nextNum else noNextNum"></div>
   </div>
   <div fxFlex="0 1 calc(50%)" fxLayout="column" fxFlexFill fxLayoutAlign="start center">
     <h1>Черга:</h1>
@@ -16,7 +16,7 @@
 
 <ng-template #nextNum>
   <h1>Наступні номери:</h1>
-  <h1 class="next">{{(processing$ | async)}}</h1>
+  <h1 class="next">{{(going$ | async)}}</h1>
 </ng-template>
 
 <ng-template #noNextNum>

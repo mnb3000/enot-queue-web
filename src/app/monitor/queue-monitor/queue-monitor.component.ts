@@ -9,9 +9,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./queue-monitor.component.css']
 })
 export class QueueMonitorComponent implements OnInit {
-  currentNumber: number;
-  queueCodes: number[];
-  processing$: Observable<string>;
+  going$: Observable<string>;
   waiting$: Observable<number[]>;
   queue$: Observable<Queue>;
   @Input() queueId: number;
@@ -21,11 +19,11 @@ export class QueueMonitorComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const [waiting, processing] = this.queueService.getQueueUsers(this.queueId, 7);
+    const [waiting, going] = this.queueService.getQueueUsers(this.queueId, 7);
     this.waiting$ = waiting.pipe(
       map((positions) => positions.map(position => position.code)),
     );
-    this.processing$ = processing.pipe(
+    this.going$ = going.pipe(
       map((positions) => positions.reduce<string>((out, position) => out += `${position.code.toString()} `, ''))
     );
     this.queue$ = this.queueService.getQueue(this.queueId);

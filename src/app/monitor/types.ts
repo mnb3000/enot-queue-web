@@ -21,7 +21,7 @@ interface UserDetails {
   father_name: string;
 }
 
-type Status = 'waiting' | 'processing';
+type Status = 'waiting' | 'going' | 'processing';
 
 interface Position {
   id: string;
